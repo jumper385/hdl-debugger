@@ -14,6 +14,8 @@ architecture sim of bram_tb is
 	signal read_en : std_logic;
 	signal din : std_logic_vector(7 downto 0);
 	signal dout : std_logic_vector(7 downto 0);
+	signal is_empty : std_logic;
+	signal is_full : std_logic;
 
 	-- clocks
 	constant RCLK_PERIOD : time := 10 ns;
@@ -29,7 +31,9 @@ begin
 		rclk => rclk,
 		din => din,
 		dout => dout,
-		read_en => read_en
+		read_en => read_en,
+		is_empty => is_empty,
+		is_full => is_full
 	);
 
 	-- read clock process 
@@ -82,6 +86,12 @@ begin
 		assert dout = "11110000" report "Data mismatch" severity error;
 		wait for RCLK_PERIOD;
 		assert dout = "10101010" report "Data mismatch" severity error;
+
+		-- test full condition
+		write_en <= '1';
+		din <= "00001111";
+		wait for WCLK_PERIOD * 255;
+		assert is_full = '1' report "Not full" severity error;
 
 		-- end test
 		wait;
