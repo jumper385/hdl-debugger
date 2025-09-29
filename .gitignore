@@ -5,3 +5,6 @@
 *.bin
 *.json
 *.cf
+*.vcd
+*.ghw
+*.tb_config
