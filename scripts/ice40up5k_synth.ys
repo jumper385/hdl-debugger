@@ -15,6 +15,8 @@ ghdl --std=08 -fsynopsys -frelaxed-rules \
 	vhdl/uart_parity.vhd \
 	vhdl/uart_rx.vhd \
 	vhdl/uart_tx.vhd \
+	vhdl/sampler/bram.vhd \
+	vhdl/sampler/rle_sampler_cell.vhd \
 	-e top;
 
 # synthesize yosys IR into ice40 primatives
