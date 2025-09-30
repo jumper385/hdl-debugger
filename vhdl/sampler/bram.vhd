@@ -4,7 +4,7 @@ use IEEE.numeric_std.all;
 
 entity ram is
     port (
-				rst_n : in std_logic;
+        rst_n : in std_logic;
         write_en : in  std_logic;
         wclk     : in  std_logic;
         rclk     : in  std_logic;
