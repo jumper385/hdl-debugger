@@ -14,8 +14,8 @@ architecture sim of bram_tb is
 	signal read_en : std_logic;
 	signal din : std_logic_vector(7 downto 0);
 	signal dout : std_logic_vector(7 downto 0);
-	signal is_empty : std_logic;
 	signal is_full : std_logic;
+	signal rst_n : std_logic := '1';
 
 	-- clocks
 	constant RCLK_PERIOD : time := 10 ns;
@@ -26,13 +26,13 @@ begin
 	-- instantiate the bram
 	uut: entity work.ram
 	port map (
+		rst_n => rst_n,
 		write_en => write_en,
 		wclk => wclk,
 		rclk => rclk,
 		din => din,
 		dout => dout,
 		read_en => read_en,
-		is_empty => is_empty,
 		is_full => is_full
 	);
 
@@ -92,6 +92,11 @@ begin
 		din <= "00001111";
 		wait for WCLK_PERIOD * 255;
 		assert is_full = '1' report "Not full" severity error;
+
+		-- assert rst
+		rst_n <= '0';
+		wait for WCLK_PERIOD; 
+		assert is_full = '0' report "didnt reset" severity error;
 
 		-- end test
 		wait;
